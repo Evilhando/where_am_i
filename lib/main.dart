@@ -5,19 +5,23 @@ import 'package:geolocator/geolocator.dart';
 import 'package:http/http.dart' as http;
 
 void main() {
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return const MaterialApp(
       home: MyHomePage(),
     );
   }
 }
 
 class MyHomePage extends StatefulWidget {
+  const MyHomePage({super.key});
+
   @override
   _MyHomePageState createState() => _MyHomePageState();
 }
@@ -36,7 +40,6 @@ class _MyHomePageState extends State<MyHomePage> {
     if (location != null) {
       await sendLocationToApi(location);
 
-      // Aufruf der Geocoding-Funktion
       String address = await getAddressFromCoordinates(
         location.latitude,
         location.longitude,
@@ -61,7 +64,7 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   Future<void> sendLocationToApi(Position location) async {
-    String apiUrl = "https://example.com/api/update_location";
+    String apiUrl = '';
     Map<String, dynamic> data = {
       "latitude": location.latitude,
       "longitude": location.longitude,
@@ -84,8 +87,7 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   Future getAddressFromCoordinates(double latitude, double longitude) async {
-    final apiUrl =
-        'https://api.opencagedata.com/geocode/v1/json?key=$opencageApiKey&q=$latitude+$longitude&pretty=1';
+    const apiUrl = 'https://api.opencagedata.com/geocode';
 
     try {
       final response = await http.get(Uri.parse(apiUrl));
@@ -108,9 +110,10 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Where Am I App"),
+        title: const Text("Where Am I App"),
       ),
       body: Center(
+        // ignore: unnecessary_null_comparison
         child: _currentLocation != null
             ? Column(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -119,7 +122,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   Text("Longitude: ${_currentLocation.longitude}"),
                 ],
               )
-            : CircularProgressIndicator(),
+            : const CircularProgressIndicator(),
       ),
     );
   }

@@ -1,14 +1,11 @@
-// lib/main.dart
 import 'dart:convert';
+
 import 'package:http/http.dart' as http;
-import 'secrets.dart'; // Importieren Sie die Datei mit dem API-Schlüssel
 
 // ...
 
-Future<String> getAddressFromCoordinates(
-    double latitude, double longitude) async {
-  final apiUrl =
-      'https://api.opencagedata.com/geocode/v1/json?key=$opencageApiKey&q=$latitude+$longitude&pretty=1';
+Future getAddressFromCoordinates(double latitude, double longitude) async {
+  const apiUrl = 'https://api.opencagedata.com/geocode';
 
   try {
     final response = await http.get(Uri.parse(apiUrl));
